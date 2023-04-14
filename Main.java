@@ -42,7 +42,7 @@ public class Main  {
 				}
 			}
 			System.out.printf("The word is %s. You missed %d times\n", words[random] , try_count );
-			System.out.printf("Do you want to guess for another word? Enter y or n  ");
+			System.out.printf("Do you want to guess for another word? Enter y or n > ");
 			
 		} while (input.nextLine()=="y"); //다른 str로 행맨 할때까지
 	}
