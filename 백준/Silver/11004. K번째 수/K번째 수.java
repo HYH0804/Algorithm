@@ -1,74 +1,58 @@
 import java.util.*;
+import java.lang.*;
 import java.io.*;
 
-public class Main {
-    
-    static int a[];
-    
-    public static void main(String[] args) throws IOException {
+// The main method must be in a class named "Main".
+class Main {
+    public static void main(String[] args) throws Exception{
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
         StringTokenizer st = new StringTokenizer(br.readLine());
-        
-        int n = Integer.parseInt(st.nextToken());
-        int k = Integer.parseInt(st.nextToken());
-        
-        a = new int[n];
-        st = new StringTokenizer(br.readLine());
-        for(int i = 0; i < n; i++) {
-            a[i] = Integer.parseInt(st.nextToken());
+        int N=Integer.parseInt(st.nextToken());
+        int K = Integer.parseInt(st.nextToken());
+        st=new StringTokenizer(br.readLine());
+        int[] arr = new int[N];
+        for(int i=0; i<N; i++){
+            arr[i]=Integer.parseInt(st.nextToken());
         }
-        
-        quickSort(a, 0, n - 1, k - 1);
-        System.out.print(a[k - 1]);
+        quickSort(arr,0,N-1,K-1);
+        br.close();
     }
-    
-    public static void quickSort(int a[], int s, int e, int k) {
-        if(s < e) {
-            int p = partition(a, s, e);
-            if(k == p) {
-                return;
-            }else if(k < p) {
-                quickSort(a, s, p - 1, k);
-            }else {
-                quickSort(a, p + 1, e, k);
+    public static void quickSort(int[] arr, int startIndex, int endIndex, int K){
+        int pivot = (startIndex+endIndex)/2;
+        swap(arr,pivot,startIndex);
+        pivot=startIndex;
+
+        int low=startIndex+1;
+        int high=endIndex;
+        while(low<=high){
+            while(startIndex+1<=high && arr[pivot]<arr[high]){
+                high--;
             }
-        }
-    }
-    
-    public static int partition(int a[], int s, int e) {
-        if(s + 1 == e) {
-            if(a[s] > a[e]) {
-                swap(a, s, e);
+            while(low<=endIndex&& arr[pivot]>arr[low]){
+                low++;
             }
-            return e;
-        }
-        
-        int m = (s + e) / 2;
-        
-        swap(a, s, m);
-        int p = a[s];
-        int i = s + 1;
-        int j = e;
-        while(i <= j) {
-            while(a[j] > p && j >= s + 1) {
-                j--;
-            }
-            while(a[i] < p && i <= e) {
-                i++;
-            }
-            if(i <= j) {
-                swap(a, i++, j--);
+            if(high>=low){
+                swap(arr,high--,low++);
             }
         }
-        
-        a[s] = a[j];
-        a[j] = p;
-        return j;
+        swap(arr,pivot,high);
+        if(high==K){
+            System.out.printf("%d",arr[high]);
+            return;
+        }
+        else if(high>K){
+            quickSort(arr,startIndex,high-1,K);
+        }
+        else{
+            quickSort(arr,high+1,endIndex,K);
+        }
+
+
     }
-    
-    public static void swap(int a[], int i, int j) {
-        int temp = a[i];
-        a[i] = a[j];
-        a[j] = temp; 
+    public static void swap(int[] arr,int p , int q){
+        int temp = arr[p];
+        arr[p]=arr[q];
+        arr[q]=temp;
     }
+
 }
