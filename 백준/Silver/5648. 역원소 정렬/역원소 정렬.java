@@ -25,11 +25,43 @@ class Main {
             }
             st=new StringTokenizer(br.readLine());
         }
-        Arrays.sort(newArr);
-        for(int i=0; i<n; i++){
+        quickSort(newArr,0,newArr.length-1);
+        for(int i=0; i<newArr.length; i++){
             System.out.printf("%d\n",newArr[i]);
         }
+        
 
         
+    }
+    public static void quickSort(long[] arr, int start ,int end){
+        if(start>=end){
+            return;
+        }
+        int pivot= (end+start)/2;
+        swap(arr,start,pivot);
+        pivot=start;
+        int startIndex=start+1;
+        int endIndex=end;
+        while(startIndex<=endIndex){
+            while(startIndex<=end && arr[startIndex]<=arr[pivot]){
+                startIndex++;
+            }
+            while(endIndex>=start+1 && arr[endIndex]>=arr[pivot]){
+                endIndex--;
+            }
+            if(startIndex<=endIndex){
+                swap(arr,startIndex++,endIndex--);
+            }
+        }
+        swap(arr,endIndex,pivot);
+        pivot=endIndex;
+        quickSort(arr,start,pivot-1);
+        quickSort(arr,pivot+1,end);
+    }
+    
+    public static void swap(long[] arr, int a, int b){
+        long temp = arr[a];
+        arr[a]=arr[b];
+        arr[b]=temp;
     }
 }
